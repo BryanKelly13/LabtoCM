@@ -19,78 +19,99 @@ gamma = sqrt( (m_a * m_b * E_a) / (m_B(m_b + m_B)*Q + m_B(m_B + m_b - m_a)*E_a) 
 # Defining our constants --> masses, Q value, beam Energy
 # This is for a 49Ti(d,p)50Ti reaction
 
-Q = 8.714  # Q value of the reaction in MeV
+# Q = 8.714  # Q value of the reaction in MeV
+# E_a = 16   # in MeV --> laboratory bombarding energy
+# m_a = 1875.61294257  # deuteron mass in MeV
+# m_b = 938.272088 # proton mass in MeV
+# m_B = 46511.08755 # 50Ti mass in MeV --> ~49.94479 amu
+
+#For 10B(d,p)11B
+
+# Q = 9.229655  # Q value of the reaction in MeV
+# E_a = 16   # in MeV --> laboratory bombarding energy
+# m_a = 1875.61294257  # deuteron mass in MeV
+# m_b = 938.272088 # proton mass in MeV
+# m_B = 9327.050816 # 50Ti mass in MeV --> ~10.0129370 amu
+
+# For 61Ni(d,p)62Ni reaction
+Q = 1.4292  # Q value of the reaction in MeV   try then 1.4292
 E_a = 16   # in MeV --> laboratory bombarding energy
 m_a = 1875.61294257  # deuteron mass in MeV
 m_b = 938.272088 # proton mass in MeV
-m_B = 46511.08755 # 50Ti mass in MeV --> ~49.94479 amu
+m_B = 57686.25327 # 62Ni mass in MeV --> ~61.9283449 amu
+
 
 RAD_TO_DEG = 180.0 / np.pi
 DEG_TO_RAD = np.pi / 180.0
 
+
 GAMMA = np.sqrt( (m_a * m_b * E_a) / (m_B*(m_b + m_B)*Q + m_B*(m_B + m_b - m_a)*E_a) )
 
 def labToCM(labAngles):
-    cmAngles = np.linspace(15, 62, 900)
+    headercount=4
+    for i in range(len(labAngles)):
+        globals()[f'lab_list_{labAngles[i]}'] = []    
+
+    cmAngles = np.linspace(15, 75, 10000)
     CM_angle_list = []
-    lab_list_15 = []
-    lab_list_20 = []
-    lab_list_25 = []
-    lab_list_30 = []
-    lab_list_35 = []
-    lab_list_40 = []
-    lab_list_45 = []
-    lab_list_50 = []
-    lab_list_55 = []
-    lab_list_60 = []
+
     for i in cmAngles:
         theta_prime = i * DEG_TO_RAD
         cosLabAngle = ( GAMMA + np.cos(theta_prime) ) / ( np.sqrt(1 + GAMMA**2 + 2*GAMMA*np.cos(theta_prime)) )
         labAngle = np.arccos(cosLabAngle)
         temp = np.format_float_positional(labAngle * RAD_TO_DEG, 2)
         newAngle = float(temp)
-        #print("Lab Angle: ", newAngle, "  |   CM Angle: ", i )
         if int(newAngle) % 5 == 0:
             if int(newAngle) == 15:
-                lab_list_15.append(newAngle)
-                if len(lab_list_15) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_15' in globals():
+                    lab_list_15.append(newAngle)
+                    if len(lab_list_15) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 20:
-                lab_list_20.append(newAngle)
-                if len(lab_list_20) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_20' in globals():
+                    lab_list_20.append(newAngle)
+                    if len(lab_list_20) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 25:
-                lab_list_25.append(newAngle)
-                if len(lab_list_25) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_25' in globals():
+                    lab_list_25.append(newAngle)
+                    if len(lab_list_25) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 30:
-                lab_list_30.append(newAngle)
-                if len(lab_list_30) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_30' in globals():
+                    lab_list_30.append(newAngle)
+                    if len(lab_list_30) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 35:
-                lab_list_35.append(newAngle)
-                if len(lab_list_35) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_35' in globals():
+                    lab_list_35.append(newAngle)
+                    if len(lab_list_35) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 40:
-                lab_list_40.append(newAngle)
-                if len(lab_list_40) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_40' in globals():
+                    lab_list_40.append(newAngle)
+                    if len(lab_list_40) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 45:
-                lab_list_45.append(newAngle)
-                if len(lab_list_45) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_45' in globals():
+                    lab_list_45.append(newAngle)
+                    if len(lab_list_45) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 50:
-                lab_list_50.append(newAngle)
-                if len(lab_list_50) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_50' in globals():
+                    lab_list_50.append(newAngle)
+                    if len(lab_list_50) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 55:
-                lab_list_55.append(newAngle)
-                if len(lab_list_55) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_55' in globals():
+                    lab_list_55.append(newAngle)
+                    if len(lab_list_55) == 1:
+                        CM_angle_list.append(round(i, 1))
             if int(newAngle) == 60:
-                lab_list_60.append(newAngle)
-                if len(lab_list_60) == 1:
-                    CM_angle_list.append(i)
+                if 'lab_list_60' in globals():
+                    lab_list_60.append(newAngle)
+                    if len(lab_list_60) == 1:
+                        CM_angle_list.append(round(i, 1))
     return CM_angle_list    
 
 
@@ -99,9 +120,11 @@ def main():
     
     cmAngles = labToCM(labAngles)
 
+    print(cmAngles)
+
     print("CM angles calculated, outputting values now: ")
     listlen = len(labAngles)
-    print("Lab         CM")
+    print("Lab     CM")
     for i in range(listlen):
         print(labAngles[i], "   ", cmAngles[i])
 
