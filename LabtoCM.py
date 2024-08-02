@@ -48,66 +48,23 @@ DEG_TO_RAD = np.pi / 180.0
 GAMMA = np.sqrt( (m_a * m_b * E_a) / (m_B*(m_b + m_B)*Q + m_B*(m_B + m_b - m_a)*E_a) )
 
 def labToCM(labAngles):
+    lab_lists = {angle: [] for angle in labAngles}  # Create a dictionary for lab lists
     cmAngles = np.linspace(15, 62, 900)
     CM_angle_list = []
-    lab_list_15 = []
-    lab_list_20 = []
-    lab_list_25 = []
-    lab_list_30 = []
-    lab_list_35 = []
-    lab_list_40 = []
-    lab_list_45 = []
-    lab_list_50 = []
-    lab_list_55 = []
-    lab_list_60 = []
+    
     for i in cmAngles:
         theta_prime = i * DEG_TO_RAD
-        cosLabAngle = ( GAMMA + np.cos(theta_prime) ) / ( np.sqrt(1 + GAMMA**2 + 2*GAMMA*np.cos(theta_prime)) )
+        cosLabAngle = (GAMMA + np.cos(theta_prime)) / (np.sqrt(1 + GAMMA**2 + 2*GAMMA*np.cos(theta_prime)))
         labAngle = np.arccos(cosLabAngle)
-        temp = np.format_float_positional(labAngle * RAD_TO_DEG, 2)
+        temp = "{:.2f}".format(labAngle * RAD_TO_DEG)
         newAngle = float(temp)
         #print("Lab Angle: ", newAngle, "  |   CM Angle: ", i )
         if int(newAngle) % 5 == 0:
-            if int(newAngle) == 15:
-                lab_list_15.append(newAngle)
-                if len(lab_list_15) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 20:
-                lab_list_20.append(newAngle)
-                if len(lab_list_20) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 25:
-                lab_list_25.append(newAngle)
-                if len(lab_list_25) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 30:
-                lab_list_30.append(newAngle)
-                if len(lab_list_30) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 35:
-                lab_list_35.append(newAngle)
-                if len(lab_list_35) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 40:
-                lab_list_40.append(newAngle)
-                if len(lab_list_40) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 45:
-                lab_list_45.append(newAngle)
-                if len(lab_list_45) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 50:
-                lab_list_50.append(newAngle)
-                if len(lab_list_50) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 55:
-                lab_list_55.append(newAngle)
-                if len(lab_list_55) == 1:
-                    CM_angle_list.append(i)
-            if int(newAngle) == 60:
-                lab_list_60.append(newAngle)
-                if len(lab_list_60) == 1:
-                    CM_angle_list.append(i)
+            int_newAngle = int(newAngle)
+            if int_newAngle in lab_lists:
+                lab_lists[int_newAngle].append(newAngle)
+                if len(lab_lists[int_newAngle]) == 1:
+                    CM_angle_list.append(round(i, 1))
     return CM_angle_list    
 
 
